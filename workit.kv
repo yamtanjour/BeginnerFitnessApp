@@ -8,6 +8,12 @@
             pos_hint: {"center_x": 0.5, "center_y": 0.5}
             on_release:
                 app.root.current = 'my_workouts'
+        Button:
+            text: "Tips"
+            size_hint: 0.4, 0.08
+            pos_hint: {"center_x": 0.5, "y": 0.1}
+            on_release:
+                app.root.current = 'tips'
 
 <MyWorkoutsScreen>:
     BoxLayout:
@@ -49,5 +55,99 @@
             size_hint_y: None
             height: 50
             on_release:
-                # You can add logic to open a popup or another screen to add a workout
-                print("Add Workout pressed")
+                app.root.current = 'workout_creation'
+
+<WorkoutCreationScreen>:
+    BoxLayout:
+        orientation: 'vertical'
+        padding: 20
+        spacing: 20
+
+        BoxLayout:
+            size_hint_y: None
+            height: 50
+            spacing: 10
+
+            Button:
+                text: "< Back"
+                size_hint_x: 0.3
+                on_release:
+                    app.root.current = 'my_workouts'
+
+            Label:
+                text: "Create Workout"
+                font_size: '24sp'
+                color: 1,1,1,1
+                halign: 'left'
+                valign: 'middle'
+                text_size: self.size
+
+            Widget:
+                size_hint_x: 0.3
+
+        Label:
+            text: "Workout Name:"
+            color: 1,1,1,1
+            size_hint_y: None
+            height: 30
+            halign: 'left'
+            valign: 'middle'
+            text_size: self.size
+
+        TextInput:
+            id: workout_name
+            hint_text: "Enter workout name"
+            size_hint_y: None
+            height: 40
+            multiline: False
+
+        Label:
+            text: "Add exercises below (feature coming soon)"
+            color: 0.8,0.8,0.8,1
+            size_hint_y: None
+            height: 30
+
+        Widget:
+            size_hint_y: 1
+
+        Button:
+            text: "Save Workout"
+            size_hint_y: None
+            height: 50
+            on_release:
+                print("Save Workout pressed")
+
+<TipsScreen>:
+    BoxLayout:
+        orientation: 'vertical'
+        padding: 20
+        spacing: 20
+
+        BoxLayout:
+            size_hint_y: None
+            height: 50
+            spacing: 10
+
+            Button:
+                text: "< Back"
+                size_hint_x: 0.3
+                on_release:
+                    app.root.current = 'home'
+
+            Label:
+                text: "Tips"
+                font_size: '24sp'
+                color: 1,1,1,1
+                halign: 'left'
+                valign: 'middle'
+                text_size: self.size
+
+            Widget:
+                size_hint_x: 0.3
+
+        Label:
+            text: "Here you can display workout tips or motivational content."
+            color: 1,1,1,1
+            halign: 'center'
+            valign: 'middle'
+            text_size:
