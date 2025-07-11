@@ -1,0 +1,23 @@
+[
+  {
+    "workout": "Workout",
+    "timestamp": "2025-07-11T17:44:37.029297"
+  },
+  {
+    "workout": "Workout",
+    "timestamp": "2025-07-11T17:46:42.597570"
+  },
+  {
+    "workout": "Workout",
+    "exercises": [
+      "Walking,_Treadmill",
+      "Thigh_Abductor",
+      "Dumbbell_Lunges",
+      "Leg_Press",
+      "Ab_Crunch_Machine",
+      "Seated_Leg_Curl",
+      "Lying_Leg_Curls"
+    ],
+    "timestamp": "2025-07-11T19:12:20.075508"
+  }
+]

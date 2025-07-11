@@ -1,0 +1,14 @@
+[
+  {
+    "name": "Workout",
+    "exercises": [
+      "Walking,_Treadmill",
+      "Thigh_Abductor",
+      "Dumbbell_Lunges",
+      "Leg_Press",
+      "Ab_Crunch_Machine",
+      "Seated_Leg_Curl",
+      "Lying_Leg_Curls"
+    ]
+  }
+]

@@ -16,6 +16,7 @@
                 app.root.current = 'tips'
 
 <MyWorkoutsScreen>:
+    on_pre_enter: root.on_pre_enter()
     BoxLayout:
         orientation: 'vertical'
         padding: 20
@@ -58,6 +59,7 @@
                 app.root.current = 'workout_creation'
 
 <WorkoutCreationScreen>:
+    on_pre_enter: root.on_pre_enter()
     BoxLayout:
         orientation: 'vertical'
         padding: 20
@@ -102,10 +104,41 @@
             multiline: False
 
         Label:
-            text: "Add exercises below (feature coming soon)"
+            text: "Search and Add Exercises:"
+            color: 1,1,1,1
+            size_hint_y: None
+            height: 30
+
+        BoxLayout:
+            size_hint_y: None
+            height: 40
+            spacing: 10
+
+            TextInput:
+                id: exercise_search
+                hint_text: "Type exercise name"
+                multiline: False
+                on_text: root.search_exercises()
+
+        ScrollView:
+            BoxLayout:
+                id: exercise_search_results
+                orientation: 'vertical'
+                size_hint_y: None
+                height: self.minimum_height
+
+        Label:
+            text: "Exercises in Workout:"
             color: 0.8,0.8,0.8,1
             size_hint_y: None
             height: 30
+
+        ScrollView:
+            BoxLayout:
+                id: exercise_list_box
+                orientation: 'vertical'
+                size_hint_y: None
+                height: self.minimum_height
 
         Widget:
             size_hint_y: 1
@@ -114,8 +147,52 @@
             text: "Save Workout"
             size_hint_y: None
             height: 50
-            on_release:
-                print("Save Workout pressed")
+            on_release: root.save_workout()
+
+<WorkoutDetailScreen>:
+    on_pre_enter: root.on_pre_enter()
+    BoxLayout:
+        orientation: 'vertical'
+        padding: 20
+        spacing: 20
+
+        BoxLayout:
+            size_hint_y: None
+            height: 50
+            spacing: 10
+
+            Button:
+                text: "< Back"
+                size_hint_x: 0.3
+                on_release:
+                    app.root.current = 'my_workouts'
+
+            Label:
+                text: "Workout Progress"
+                font_size: '24sp'
+                color: 1,1,1,1
+                halign: 'left'
+                valign: 'middle'
+                text_size: self.size
+
+            Widget:
+                size_hint_x: 0.3
+
+        ScrollView:
+            BoxLayout:
+                id: workout_detail_box
+                orientation: 'vertical'
+                size_hint_y: None
+                height: self.minimum_height
+
+        Widget:
+            size_hint_y: 1
+
+        Button:
+            text: "Finish Workout"
+            size_hint_y: None
+            height: 50
+            on_release: root.finish_workout()
 
 <TipsScreen>:
     BoxLayout:
@@ -141,7 +218,7 @@
                 halign: 'left'
                 valign: 'middle'
                 text_size: self.size
-
+                
             Widget:
                 size_hint_x: 0.3
 
@@ -150,4 +227,4 @@
             color: 1,1,1,1
             halign: 'center'
             valign: 'middle'
-            text_size:
+            text_size: self.size
