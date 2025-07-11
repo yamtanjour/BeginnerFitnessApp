@@ -1,7 +1,9 @@
-exercise_images/
-# Ignore all images in the exercise_images directory
-exercise_images/*.jpg
-exercise_images/*.png
-images/
+# Ignore folders
+exercise_images/'
+images/'
 exercises/
+all_exercises.json
+
+
+# Ignore specific file
 all_exercises.json
