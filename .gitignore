@@ -1,0 +1,7 @@
+exercise_images/
+# Ignore all images in the exercise_images directory
+exercise_images/*.jpg
+exercise_images/*.png
+images/
+exercises/
+all_exercises.json
