@@ -1,6 +1,6 @@
 # Ignore folders
-exercise_images/'
-images/'
+exercise_images/
+images/
 exercises/
 all_exercises.json
 

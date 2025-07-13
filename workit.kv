@@ -1,19 +1,52 @@
 #:kivy 2.0
 
+<RootWidget@ScreenManager>:
+    canvas.before:
+        Color:
+            rgba: 0.1, 0.2, 0.5, 1  # blue background
+        Rectangle:
+            pos: self.pos
+            size: self.size
+
+<GreenButton@Button>:
+    background_color: 0, 0, 0, 0
+    color: 1, 1, 1, 1
+    font_size: '16sp'
+    bold: True
+    canvas.before:
+        Color:
+            rgba: 0.2, 0.8, 0.4, 1  # green
+        RoundedRectangle:
+            pos: self.pos
+            size: self.size
+            radius: [20]
+
+<ClickableLabel@Label>:
+    color: 1, 1, 1, 1
+    markup: True
+    font_size: '16sp'
+
+<StyledLabel@Label>:
+    color: 1, 1, 1, 1
+    font_size: '18sp'
+
 <HomeScreen>:
     FloatLayout:
-        Button:
+        GreenButton:
             text: "Go to My Workouts"
             size_hint: 0.6, 0.1
-            pos_hint: {"center_x": 0.5, "center_y": 0.5}
-            on_release:
-                app.root.current = 'my_workouts'
-        Button:
+            pos_hint: {"center_x": 0.5, "center_y": 0.55}
+            on_release: app.root.current = 'my_workouts'
+        GreenButton:
+            text: "Progress"
+            size_hint: 0.4, 0.08
+            pos_hint: {"center_x": 0.5, "y": 0.25}
+            on_release: app.root.current = 'progress'
+        GreenButton:
             text: "Tips"
             size_hint: 0.4, 0.08
-            pos_hint: {"center_x": 0.5, "y": 0.1}
-            on_release:
-                app.root.current = 'tips'
+            pos_hint: {"center_x": 0.5, "y": 0.13}
+            on_release: app.root.current = 'tips'
 
 <MyWorkoutsScreen>:
     on_pre_enter: root.on_pre_enter()
@@ -21,80 +54,54 @@
         orientation: 'vertical'
         padding: 20
         spacing: 20
-
         BoxLayout:
             size_hint_y: None
             height: 50
             spacing: 10
-
-            Button:
+            GreenButton:
                 text: "< Back"
                 size_hint_x: 0.3
-                on_release:
-                    app.root.current = 'home'
-
-            Label:
+                on_release: app.root.current = 'home'
+            StyledLabel:
                 text: "My Workouts"
-                font_size: '24sp'
-                color: 1,1,1,1
-                halign: 'left'
-                valign: 'middle'
-                text_size: self.size
-
             Widget:
                 size_hint_x: 0.3
-
         ScrollView:
             BoxLayout:
                 id: workouts_box
                 orientation: 'vertical'
                 size_hint_y: None
                 height: self.minimum_height
-
-        Button:
+        GreenButton:
             text: "+ Add Workout"
             size_hint_y: None
             height: 50
-            on_release:
-                app.root.current = 'workout_creation'
+            on_release: app.root.current = 'workout_creation'
 
 <WorkoutCreationScreen>:
     on_pre_enter: root.on_pre_enter()
     BoxLayout:
         orientation: 'vertical'
         padding: 20
-        spacing: 20
+        spacing: 10
 
         BoxLayout:
             size_hint_y: None
             height: 50
             spacing: 10
-
-            Button:
+            GreenButton:
                 text: "< Back"
                 size_hint_x: 0.3
-                on_release:
-                    app.root.current = 'my_workouts'
-
-            Label:
+                on_release: app.root.current = 'my_workouts'
+            StyledLabel:
                 text: "Create Workout"
-                font_size: '24sp'
-                color: 1,1,1,1
-                halign: 'left'
-                valign: 'middle'
-                text_size: self.size
-
             Widget:
                 size_hint_x: 0.3
 
-        Label:
+        StyledLabel:
             text: "Workout Name:"
-            color: 1,1,1,1
             size_hint_y: None
             height: 30
-            halign: 'left'
-            valign: 'middle'
-            text_size: self.size
 
         TextInput:
             id: workout_name
@@ -103,9 +110,8 @@
             height: 40
             multiline: False
 
-        Label:
+        StyledLabel:
             text: "Search and Add Exercises:"
-            color: 1,1,1,1
             size_hint_y: None
             height: 30
 
@@ -113,7 +119,6 @@
             size_hint_y: None
             height: 40
             spacing: 10
-
             TextInput:
                 id: exercise_search
                 hint_text: "Type exercise name"
@@ -127,9 +132,14 @@
                 size_hint_y: None
                 height: self.minimum_height
 
-        Label:
+        GreenButton:
+            text: "Premade Workouts"
+            size_hint_y: None
+            height: 40
+            on_release: root.open_premade_popup()
+
+        StyledLabel:
             text: "Exercises in Workout:"
-            color: 0.8,0.8,0.8,1
             size_hint_y: None
             height: 30
 
@@ -143,11 +153,30 @@
         Widget:
             size_hint_y: 1
 
-        Button:
+        GreenButton:
             text: "Save Workout"
             size_hint_y: None
             height: 50
             on_release: root.save_workout()
+
+<PremadePopup@Popup>:
+    title: "Premade Workouts"
+    size_hint: 0.95, 0.85
+    BoxLayout:
+        orientation: 'vertical'
+        padding: 10
+        spacing: 10
+        ScrollView:
+            BoxLayout:
+                id: premade_workout_box
+                orientation: 'vertical'
+                size_hint_y: None
+                height: self.minimum_height
+        GreenButton:
+            text: "Close"
+            size_hint_y: None
+            height: 40
+            on_release: root.dismiss()
 
 <WorkoutDetailScreen>:
     on_pre_enter: root.on_pre_enter()
@@ -155,76 +184,108 @@
         orientation: 'vertical'
         padding: 20
         spacing: 20
-
         BoxLayout:
             size_hint_y: None
             height: 50
             spacing: 10
-
-            Button:
+            GreenButton:
                 text: "< Back"
                 size_hint_x: 0.3
-                on_release:
-                    app.root.current = 'my_workouts'
-
-            Label:
+                on_release: app.root.current = 'my_workouts'
+            StyledLabel:
                 text: "Workout Progress"
-                font_size: '24sp'
-                color: 1,1,1,1
-                halign: 'left'
-                valign: 'middle'
-                text_size: self.size
-
             Widget:
                 size_hint_x: 0.3
-
         ScrollView:
             BoxLayout:
                 id: workout_detail_box
                 orientation: 'vertical'
                 size_hint_y: None
                 height: self.minimum_height
-
         Widget:
             size_hint_y: 1
-
-        Button:
+        GreenButton:
             text: "Finish Workout"
             size_hint_y: None
             height: 50
             on_release: root.finish_workout()
+
+<ProgressScreen>:
+    on_pre_enter: root.on_pre_enter()
+    BoxLayout:
+        orientation: 'vertical'
+        padding: 20
+        spacing: 10
+        BoxLayout:
+            size_hint_y: None
+            height: 50
+            spacing: 10
+            GreenButton:
+                text: "< Back"
+                size_hint_x: 0.3
+                on_release: app.root.current = 'home'
+            StyledLabel:
+                text: "Progress"
+            Widget:
+                size_hint_x: 0.3
+        ScrollView:
+            BoxLayout:
+                id: progress_box
+                orientation: 'vertical'
+                size_hint_y: None
+                height: self.minimum_height
+        Widget:
+            size_hint_y: 1
+        GreenButton:
+            text: "Stats"
+            size_hint_y: None
+            height: 50
+            on_release: root.go_to_stats()
+
+<StatsScreen>:
+    on_pre_enter: root.on_pre_enter()
+    BoxLayout:
+        orientation: 'vertical'
+        spacing: 10
+        padding: 20
+        BoxLayout:
+            size_hint_y: None
+            height: 50
+            spacing: 10
+            GreenButton:
+                text: "< Back"
+                size_hint_x: 0.3
+                on_release: app.root.current = 'progress'
+            StyledLabel:
+                text: "Statistics"
+            Widget:
+                size_hint_x: 0.3
+        ScrollView:
+            BoxLayout:
+                id: stats_box
+                orientation: 'vertical'
+                size_hint_y: None
+                height: self.minimum_height
+                size_hint_x: 1  # This makes it stretch!
 
 <TipsScreen>:
     BoxLayout:
         orientation: 'vertical'
         padding: 20
         spacing: 20
-
         BoxLayout:
             size_hint_y: None
             height: 50
             spacing: 10
-
-            Button:
+            GreenButton:
                 text: "< Back"
                 size_hint_x: 0.3
-                on_release:
-                    app.root.current = 'home'
-
-            Label:
+                on_release: app.root.current = 'home'
+            StyledLabel:
                 text: "Tips"
-                font_size: '24sp'
-                color: 1,1,1,1
-                halign: 'left'
-                valign: 'middle'
-                text_size: self.size
-                
             Widget:
                 size_hint_x: 0.3
-
-        Label:
+        StyledLabel:
             text: "Here you can display workout tips or motivational content."
-            color: 1,1,1,1
             halign: 'center'
             valign: 'middle'
-            text_size: self.size
