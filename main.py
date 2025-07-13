@@ -21,36 +21,49 @@ PROGRESS_FILE = "progress.json"
 PREMADE_FILE = "premade_workouts.json"
 EXERCISE_IMAGES_DIR = "exercise_images"
 
+def get_file_path(filename):
+    app = App.get_running_app()
+    # If running outside Kivy App (e.g. for testing), fallback to current dir
+    if hasattr(app, 'user_data_dir'):
+        return os.path.join(app.user_data_dir, filename)
+    return filename
+
 def load_workouts():
-    if not os.path.exists(WORKOUTS_FILE):
+    path = get_file_path(WORKOUTS_FILE)
+    if not os.path.exists(path):
         return []
-    with open(WORKOUTS_FILE, "r") as f:
+    with open(path, "r") as f:
         return json.load(f)
 
 def save_workouts(workouts):
-    with open(WORKOUTS_FILE, "w") as f:
+    path = get_file_path(WORKOUTS_FILE)
+    with open(path, "w") as f:
         json.dump(workouts, f, indent=2)
 
 def load_exercises():
-    if not os.path.exists(EXERCISES_FILE):
+    path = get_file_path(EXERCISES_FILE)
+    if not os.path.exists(path):
         return []
-    with open(EXERCISES_FILE, "r") as f:
+    with open(path, "r") as f:
         return json.load(f)
 
 def load_progress():
-    if not os.path.exists(PROGRESS_FILE):
+    path = get_file_path(PROGRESS_FILE)
+    if not os.path.exists(path):
         return []
-    with open(PROGRESS_FILE, "r") as f:
+    with open(path, "r") as f:
         return json.load(f)
 
 def save_progress(progress):
-    with open(PROGRESS_FILE, "w") as f:
+    path = get_file_path(PROGRESS_FILE)
+    with open(path, "w") as f:
         json.dump(progress, f, indent=2)
 
 def load_premade_workouts():
-    if not os.path.exists(PREMADE_FILE):
+    path = get_file_path(PREMADE_FILE)
+    if not os.path.exists(path):
         return []
-    with open(PREMADE_FILE, "r") as f:
+    with open(path, "r") as f:
         return json.load(f)
 
 def display_name(name):
@@ -454,7 +467,7 @@ class GreenButton(Button):
 class WorkItApp(App):
     def build(self):
         Window.clearcolor = (0.1, 0.2, 0.5, 1)  # blue background
-        Window.size = (360, 640)
+        # Window.size = (360, 640)  # REMOVE THIS LINE for Android compatibility
         sm = ScreenManager()
         sm.add_widget(HomeScreen(name='home'))
         sm.add_widget(MyWorkoutsScreen(name='my_workouts'))
