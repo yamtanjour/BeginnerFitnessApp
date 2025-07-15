@@ -2,6 +2,7 @@ import json
 import os
 import re
 import datetime
+import shutil
 from collections import Counter, defaultdict
 from kivy.app import App
 from kivy.core.window import Window
@@ -21,48 +22,51 @@ PROGRESS_FILE = "progress.json"
 PREMADE_FILE = "premade_workouts.json"
 EXERCISE_IMAGES_DIR = "exercise_images"
 
-def get_file_path(filename):
+def ensure_json_file_exists(filename):
+    """
+    Ensure the JSON file exists in user_data_dir.
+    If not, copy it from the app directory (bundled with the app).
+    Returns the path to use for reading/writing.
+    """
     app = App.get_running_app()
-    # If running outside Kivy App (e.g. for testing), fallback to current dir
-    if hasattr(app, 'user_data_dir'):
-        return os.path.join(app.user_data_dir, filename)
-    return filename
+    dst = os.path.join(app.user_data_dir, filename)
+    if not os.path.exists(dst):
+        src = os.path.join(os.path.dirname(__file__), filename)
+        if os.path.exists(src):
+            shutil.copyfile(src, dst)
+        else:
+            # If the source doesn't exist (first run), create an empty list
+            with open(dst, "w") as f:
+                f.write("[]")
+    return dst
 
 def load_workouts():
-    path = get_file_path(WORKOUTS_FILE)
-    if not os.path.exists(path):
-        return []
+    path = ensure_json_file_exists(WORKOUTS_FILE)
     with open(path, "r") as f:
         return json.load(f)
 
 def save_workouts(workouts):
-    path = get_file_path(WORKOUTS_FILE)
+    path = ensure_json_file_exists(WORKOUTS_FILE)
     with open(path, "w") as f:
         json.dump(workouts, f, indent=2)
 
 def load_exercises():
-    path = get_file_path(EXERCISES_FILE)
-    if not os.path.exists(path):
-        return []
+    path = ensure_json_file_exists(EXERCISES_FILE)
     with open(path, "r") as f:
         return json.load(f)
 
 def load_progress():
-    path = get_file_path(PROGRESS_FILE)
-    if not os.path.exists(path):
-        return []
+    path = ensure_json_file_exists(PROGRESS_FILE)
     with open(path, "r") as f:
         return json.load(f)
 
 def save_progress(progress):
-    path = get_file_path(PROGRESS_FILE)
+    path = ensure_json_file_exists(PROGRESS_FILE)
     with open(path, "w") as f:
         json.dump(progress, f, indent=2)
 
 def load_premade_workouts():
-    path = get_file_path(PREMADE_FILE)
-    if not os.path.exists(path):
-        return []
+    path = ensure_json_file_exists(PREMADE_FILE)
     with open(path, "r") as f:
         return json.load(f)
 
@@ -467,7 +471,6 @@ class GreenButton(Button):
 class WorkItApp(App):
     def build(self):
         Window.clearcolor = (0.1, 0.2, 0.5, 1)  # blue background
-        # Window.size = (360, 640)  # REMOVE THIS LINE for Android compatibility
         sm = ScreenManager()
         sm.add_widget(HomeScreen(name='home'))
         sm.add_widget(MyWorkoutsScreen(name='my_workouts'))
