@@ -51,9 +51,13 @@ class WorkoutCreationScreen(Screen):
                 text=f"[u]{display_name(ex)}[/u]",
                 markup=True,
                 color=(1,1,1,1),
+                font_size=20,
                 size_hint_y=None,
-                height=30
+                height=30,
+                halign='center',
+                valign='middle'
             )
+            lbl.bind(size=lambda instance, value: setattr(instance, 'text_size', (instance.width, None)))
             box.add_widget(lbl)
 
     def normalize(self, text):
@@ -75,9 +79,13 @@ class WorkoutCreationScreen(Screen):
                 text=f"[u]{display_name(ex['name'])}[/u]",
                 markup=True,
                 color=(1,1,1,1),
+                font_size=20,
                 size_hint_y=None,
-                height=30
+                height=38,
+                halign='center',
+                valign='middle'
             )
+            lbl.bind(size=lambda instance, value: setattr(instance, 'text_size', (instance.width, None)))
             def on_lbl_touch(instance, touch, name=ex["name"]):
                 if instance.collide_point(*touch.pos):
                     self.add_exercise(name)

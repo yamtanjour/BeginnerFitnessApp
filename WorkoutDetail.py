@@ -89,6 +89,8 @@ class WorkoutDetailScreen(Screen):
         ex_info = get_exercise_info(ex_name)
         instructions = "\n".join(ex_info.get("instructions", [])) if ex_info else "No instructions available."
         from kivy.uix.button import Button
+        from kivy.uix.boxlayout import BoxLayout
+        from kivy.uix.scrollview import ScrollView
         instr_label = Label(
             text=instructions,
             color=(1,1,1,1),
@@ -101,17 +103,21 @@ class WorkoutDetailScreen(Screen):
             instance.texture_update()
             instance.height = instance.texture_size[1]
         instr_label.bind(width=update_text_size)
-        # Set initial text_size and height
         instr_label.text_size = (400, None)
         instr_label.height = instr_label.texture_size[1]
-        scroll = ScrollView(size_hint=(1, 1))
+        scroll = ScrollView(size_hint=(1, 1), bar_width=10)
         scroll.add_widget(instr_label)
-        layout = BoxLayout(orientation='vertical', padding=[20,20,20,20], spacing=10)
+        layout = BoxLayout(orientation='vertical', padding=[24,24,24,24], spacing=18)
+        layout.add_widget(Label(text="Instructions", color=(0.2,0.8,0.4,1), font_size=22, bold=True, size_hint_y=None, height=36))
         layout.add_widget(scroll)
-        close_btn = Button(text="Close", size_hint_y=None, height=44)
+        btn_box = BoxLayout(orientation='horizontal', size_hint_y=None, height=50, padding=[0,10,0,0])
+        btn_box.add_widget(Widget())
+        close_btn = Button(text="Close", size_hint_x=None, width=120, height=44)
         close_btn.bind(on_release=lambda instance: popup.dismiss())
-        layout.add_widget(close_btn)
-        popup = Popup(title=f"{display_name(ex_name)} Instructions", content=layout, size_hint=(0.8, 0.5))
+        btn_box.add_widget(close_btn)
+        btn_box.add_widget(Widget())
+        layout.add_widget(btn_box)
+        popup = Popup(title=f"{display_name(ex_name)} Instructions", content=layout, size_hint=(0.8, 0.6))
         popup.open()
 
     def finish_workout(self):

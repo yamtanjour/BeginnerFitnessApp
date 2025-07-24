@@ -3,6 +3,7 @@ import re
 from kivy.uix.popup import Popup
 from kivy.uix.boxlayout import BoxLayout
 from kivy.uix.label import Label
+from kivy.uix.widget import Widget
 from data_handling import load_premade_workouts, display_name
 
 
@@ -15,18 +16,33 @@ class PremadePopup(Popup):
         for premade in premades:
             name = premade.get("name", "Unnamed")
             exercises = premade.get("exercises", [])
-            layout = BoxLayout(orientation='vertical', size_hint_y=None)
+            layout = BoxLayout(orientation='vertical', spacing=12, padding=[8,8,8,8], size_hint_y=None)
             layout.bind(minimum_height=layout.setter('height'))
             lbl_name = Label(
                 text=f"[b][u]{display_name(name)}[/u][/b]",
                 markup=True,
                 color=(1,1,1,1),
                 size_hint_y=None,
-                height=30
+                height=40,
+                font_size=24,
+                halign='center',
+                valign='middle'
             )
+            lbl_name.bind(size=lambda instance, value: setattr(instance, 'text_size', (instance.width, None)))
             layout.add_widget(lbl_name)
             for ex in exercises:
-                layout.add_widget(Label(text=f"• {display_name(ex)}", font_size='12sp', color=(1,1,1,1), size_hint_y=None, height=20))
+                ex_lbl = Label(
+                    text=f"• {display_name(ex)}",
+                    font_size=20,
+                    color=(1,1,1,1),
+                    size_hint_y=None,
+                    height=36,
+                    halign='left',
+                    valign='top'
+                )
+                ex_lbl.bind(size=lambda instance, value: setattr(instance, 'text_size', (int(instance.width), None)))
+                layout.add_widget(ex_lbl)
+            layout.add_widget(Widget(size_hint_y=None, height=8))
             lbl_use = Label(
                 text="[u][color=00ff00]Use This Workout[/color][/u]",
                 markup=True,
@@ -34,6 +50,7 @@ class PremadePopup(Popup):
                 height=30,
                 color=(1,1,1,1)
             )
+            lbl_use.bind(size=lambda instance, value: setattr(instance, 'text_size', (instance.width, None)))
             def on_use_touch(instance, touch, w=name, e=exercises):
                 if instance.collide_point(*touch.pos):
                     parent_screen.load_premade_into_selection(w, e)

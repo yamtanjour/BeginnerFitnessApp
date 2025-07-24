@@ -112,12 +112,21 @@ class StatsScreen(Screen):
             box.add_widget(btn)
 
     def show_muscle_popup(self, muscle_counter):
-        layout = BoxLayout(orientation='vertical', padding=10, spacing=8, size_hint_y=None)
+        layout = BoxLayout(orientation='vertical', padding=16, spacing=12, size_hint_y=None)
         layout.bind(minimum_height=layout.setter('height'))
         sorted_muscles = sorted(muscle_counter.items(), key=lambda x: -x[1])
         for muscle, count in sorted_muscles:
-            lbl = Label(text=f"{muscle}: {count}", color=(1,1,1,1), size_hint_y=None, height=28, halign='left')
-            lbl.bind(width=lambda instance, value: setattr(instance, 'text_size', (value, None)))
+            lbl = Label(
+                text=f"{muscle}: {count}",
+                color=(1,1,1,1),
+                size_hint_y=None,
+                height=32,
+                halign='left',
+                valign='top'
+            )
+            lbl.bind(
+                size=lambda instance, value: setattr(instance, 'text_size', (int(instance.width), None))
+            )
             layout.add_widget(lbl)
         scroll = ScrollView(size_hint=(1,1), do_scroll_x=False, do_scroll_y=True, bar_width=8, scroll_type=['bars', 'content'])
         scroll.add_widget(layout)
@@ -129,8 +138,17 @@ class StatsScreen(Screen):
         layout.bind(minimum_height=layout.setter('height'))
         sorted_ex = sorted(freq_counter.items(), key=lambda x: -x[1])
         for ex_name, count in sorted_ex:
-            lbl = Label(text=f"{display_name(ex_name)}: {count}", color=(1,1,1,1), size_hint_y=None, height=28, halign='left')
-            lbl.bind(width=lambda instance, value: setattr(instance, 'text_size', (value, None)))
+            lbl = Label(
+                text=f"{display_name(ex_name)}: {count}",  # or f"{muscle}: {count}"
+                color=(1,1,1,1),
+                size_hint_y=None,
+                height=32,  # increase for more space
+                halign='left',
+                valign='top'
+            )
+            lbl.bind(
+                size=lambda instance, value: setattr(instance, 'text_size', (int(instance.width), None))
+            )
             layout.add_widget(lbl)
         scroll = ScrollView(size_hint=(1,1), do_scroll_x=False, do_scroll_y=True, bar_width=8, scroll_type=['bars', 'content'])
         scroll.add_widget(layout)

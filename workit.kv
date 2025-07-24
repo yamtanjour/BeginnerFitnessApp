@@ -140,12 +140,14 @@
                 padding: [dp(8), dp(10)]
 
         ScrollView:
+            size_hint_y: None
+            height: dp(50)
             BoxLayout:
                 id: exercise_search_results
                 orientation: 'vertical'
                 size_hint_y: None
                 height: self.minimum_height
-                spacing: dp(7)
+                spacing: dp(10)
 
         GreenButton:
             text: "Premade Workouts"
@@ -158,16 +160,18 @@
             size_hint_y: None
             height: dp(34)
 
+        Widget:
+            size_hint_y: 1
+
         ScrollView:
+            size_hint_y: None
+            height: dp(80)
             BoxLayout:
                 id: exercise_list_box
                 orientation: 'vertical'
                 size_hint_y: None
                 height: self.minimum_height
                 spacing: dp(7)
-
-        Widget:
-            size_hint_y: 1
 
         GreenButton:
             text: "Save Workout"
@@ -214,6 +218,8 @@
             Widget:
                 size_hint_x: 0.3
         ScrollView:
+            size_hint_y: None
+            height: dp(420)
             BoxLayout:
                 id: workout_detail_box
                 orientation: 'vertical'
