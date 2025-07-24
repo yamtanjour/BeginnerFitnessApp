@@ -11,8 +11,13 @@ from kivy.uix.scrollview import ScrollView
 from kivy.uix.checkbox import CheckBox
 from kivy.uix.image import Image
 from kivy.core.window import Window
-from main import WORKOUTS_FILE, EXERCISES_FILE, PROGRESS_FILE, PREMADE_FILE, EXERCISE_IMAGES_DIR
 
+
+WORKOUTS_FILE = "workouts.json"
+EXERCISES_FILE = "all_exercises.json"
+PROGRESS_FILE = "progress.json"
+PREMADE_FILE = "premade_workouts.json"
+EXERCISE_IMAGES_DIR = "exercise_images"
 
 def ensure_json_file_exists(filename):
     app = App.get_running_app()

@@ -16,18 +16,13 @@ from kivy.uix.popup import Popup
 from kivy.uix.image import Image
 from kivy.uix.scrollview import ScrollView
 from data_handling import display_name, load_exercises, save_workouts, load_workouts, load_premade_workouts
-WORKOUTS_FILE = "workouts.json"
-EXERCISES_FILE = "all_exercises.json"
-PROGRESS_FILE = "progress.json"
-PREMADE_FILE = "premade_workouts.json"
-EXERCISE_IMAGES_DIR = "exercise_images"
 from MyWorkouts import MyWorkoutsScreen
 from Progress import ProgressScreen
 from Stats import StatsScreen
 from WorkoutCreation import WorkoutCreationScreen
 from WorkoutDetail import WorkoutDetailScreen
 from PremadePopup import PremadePopup
-
+from GreenButton import GreenButton
 class HomeScreen(Screen):
     pass
 

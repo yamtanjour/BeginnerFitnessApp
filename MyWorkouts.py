@@ -39,15 +39,8 @@ class MyWorkoutsScreen(Screen):
                     self.open_workout(name)
             lbl.bind(on_touch_down=on_lbl_touch)
             row.add_widget(lbl)
-
-            edit_btn = Button(text="✏️", size_hint_x=0.15, size_hint_y=None, height=38)
-            edit_btn.background_color = (0.15,0.6,0.3,1)
-            edit_btn.color = (1,1,1,1)
-            edit_btn.font_size = 18
-            edit_btn.bind(on_release=lambda inst, name=workout["name"]: self.edit_workout(name))
-            row.add_widget(edit_btn)
-
-            del_btn = Button(text="🗑️", size_hint_x=0.15, size_hint_y=None, height=38)
+            
+            del_btn = Button(text="Delete", size_hint_x=0.15, size_hint_y=None, height=38)
             del_btn.background_color = (0.9,0.2,0.2,1)
             del_btn.color = (1,1,1,1)
             del_btn.font_size = 18
@@ -60,16 +53,6 @@ class MyWorkoutsScreen(Screen):
         self.selected_workout = workout_name
         self.manager.current = 'workout_detail'
 
-    def edit_workout(self, workout_name):
-        workout = next((w for w in load_workouts() if w["name"] == workout_name), None)
-        if workout:
-            screen = self.manager.get_screen('workout_creation')
-            screen.edit_mode = True
-            screen.editing_workout_name = workout_name
-            screen.ids.workout_name.text = display_name(workout_name)
-            screen.selected_exercises = list(workout["exercises"])
-            screen.refresh_exercise_list()
-            self.manager.current = 'workout_creation'
 
     def delete_workout(self, workout_name):
         def do_delete(instance):
