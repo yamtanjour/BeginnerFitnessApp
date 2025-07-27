@@ -44,6 +44,7 @@ class WorkoutCreationScreen(Screen):
             self.refresh_exercise_list()
 
     def refresh_exercise_list(self):
+        from kivy.metrics import dp
         box = self.ids.exercise_list_box
         box.clear_widgets()
         for ex in self.selected_exercises:
@@ -51,9 +52,9 @@ class WorkoutCreationScreen(Screen):
                 text=f"[u]{display_name(ex)}[/u]",
                 markup=True,
                 color=(1,1,1,1),
-                font_size=40,
+                font_size=dp(22),
                 size_hint_y=1,
-                height=30,
+                height=dp(32),
                 halign='center',
                 valign='middle'
             )
@@ -64,6 +65,7 @@ class WorkoutCreationScreen(Screen):
         return re.sub(r'[\W_]+', ' ', text.lower())
 
     def search_exercises(self):
+        from kivy.metrics import dp
         query = self.normalize(self.ids.exercise_search.text.strip())
         results_box = self.ids.exercise_search_results
         results_box.clear_widgets()
@@ -79,9 +81,9 @@ class WorkoutCreationScreen(Screen):
                 text=f"[u]{display_name(ex['name'])}[/u]",
                 markup=True,
                 color=(1,1,1,1),
-                font_size=40,
+                font_size=dp(22),
                 size_hint_y=None,
-                height=38,
+                height=dp(32),
                 halign='center',
                 valign='middle'
             )

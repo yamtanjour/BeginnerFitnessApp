@@ -15,6 +15,7 @@ from kivy.uix.widget import Widget
 from kivy.uix.popup import Popup
 from kivy.uix.image import Image
 from kivy.uix.scrollview import ScrollView
+from kivy.metrics import dp
 from data_handling import load_workouts, load_exercises, save_progress, load_progress, EXERCISE_IMAGES_DIR, get_exercise_info, display_name, load_premade_workouts, ensure_json_file_exists   
 
 
@@ -31,14 +32,15 @@ class WorkoutDetailScreen(Screen):
         box = self.ids.workout_detail_box
         box.clear_widgets()
         for ex in self.workout["exercises"]:
-            row = BoxLayout(orientation='horizontal', size_hint_y=None, height=50, spacing=10, padding=[5,0,5,0])
+            row = BoxLayout(orientation='horizontal', size_hint_y=None, height=dp(50), spacing=dp(10), padding=[dp(5),0,dp(5),0])
             lbl = Label(
                 text=display_name(ex),
                 size_hint_x=0.6,
                 halign='left',
                 valign='middle',
                 color=(1,1,1,1),
-                text_size=(None, None)
+                text_size=(None, None),
+                font_size=dp(20)
             )
             lbl.bind(size=lambda instance, value: setattr(instance, 'text_size', (instance.width, None)))
             row.add_widget(lbl)
@@ -50,7 +52,8 @@ class WorkoutDetailScreen(Screen):
                 size_hint_x=0.25,
                 valign='middle',
                 halign='center',
-                color=(1,1,1,1)
+                color=(1,1,1,1),
+                font_size=dp(16)
             )
             def on_info_touch(instance, touch, name=ex):
                 if instance.collide_point(*touch.pos):
@@ -58,7 +61,7 @@ class WorkoutDetailScreen(Screen):
             info_lbl.bind(on_touch_down=on_info_touch)
             row.add_widget(info_lbl)
             box.add_widget(row)
-            box.add_widget(Widget(size_hint_y=None, height=2))
+            box.add_widget(Widget(size_hint_y=None, height=dp(2)))
 
     def show_exercise_info(self, ex_name):
         ex_info = get_exercise_info(ex_name)
@@ -68,18 +71,18 @@ class WorkoutDetailScreen(Screen):
             popup.open()
             return
         images = ex_info.get("images", [])[:2]
-        img_vbox = BoxLayout(orientation='vertical', spacing=15, size_hint_y=None)
+        img_vbox = BoxLayout(orientation='vertical', spacing=dp(15), size_hint_y=None)
         for img_name in images:
             img_path = os.path.join(EXERCISE_IMAGES_DIR, img_name)
             if os.path.exists(img_path):
-                img_vbox.add_widget(Image(source=img_path, size_hint=(None, None), size=(320, 220)))
+                img_vbox.add_widget(Image(source=img_path, size_hint=(None, None), size=(dp(320), dp(220))))
             else:
-                img_vbox.add_widget(Label(text="No image", size_hint=(None, None), size=(320, 220), color=(1,1,1,1)))
-        img_vbox.height = len(images) * 235
-        layout = BoxLayout(orientation='vertical', spacing=10, padding=[10,10,10,10])
+                img_vbox.add_widget(Label(text="No image", size_hint=(None, None), size=(dp(320), dp(220)), color=(1,1,1,1)))
+        img_vbox.height = len(images) * dp(235)
+        layout = BoxLayout(orientation='vertical', spacing=dp(10), padding=[dp(10),dp(10),dp(10),dp(10)])
         layout.add_widget(img_vbox)
         from kivy.uix.button import Button
-        instr_btn = Button(text="Show Instructions", size_hint_y=None, height=44)
+        instr_btn = Button(text="Show Instructions", size_hint_y=None, height=dp(44))
         instr_btn.bind(on_release=lambda instance: self.show_instructions_only_popup(ex_name))
         layout.add_widget(instr_btn)
         popup = Popup(title=display_name(ex_name), content=layout, size_hint=(0.98, 0.85))
@@ -107,12 +110,12 @@ class WorkoutDetailScreen(Screen):
         instr_label.height = instr_label.texture_size[1]
         scroll = ScrollView(size_hint=(1, 1), bar_width=10)
         scroll.add_widget(instr_label)
-        layout = BoxLayout(orientation='vertical', padding=[24,24,24,24], spacing=18)
-        layout.add_widget(Label(text="Instructions", color=(0.2,0.8,0.4,1), font_size=22, bold=True, size_hint_y=None, height=36))
+        layout = BoxLayout(orientation='vertical', padding=[dp(24),dp(24),dp(24),dp(24)], spacing=dp(18))
+        layout.add_widget(Label(text="Instructions", color=(0.2,0.8,0.4,1), font_size=dp(22), bold=True, size_hint_y=None, height=dp(36)))
         layout.add_widget(scroll)
-        btn_box = BoxLayout(orientation='horizontal', size_hint_y=None, height=50, padding=[0,10,0,0])
+        btn_box = BoxLayout(orientation='horizontal', size_hint_y=None, height=dp(50), padding=[0,dp(10),0,0])
         btn_box.add_widget(Widget())
-        close_btn = Button(text="Close", size_hint_x=None, width=120, height=44)
+        close_btn = Button(text="Close", size_hint_x=None, width=dp(120), height=dp(44))
         close_btn.bind(on_release=lambda instance: popup.dismiss())
         btn_box.add_widget(close_btn)
         btn_box.add_widget(Widget())

@@ -4,6 +4,7 @@ import re
 import datetime
 import shutil
 from collections import Counter, defaultdict
+from kivy.metrics import dp
 from kivy.app import App
 from kivy.core.window import Window
 from kivy.uix.screenmanager import ScreenManager, Screen
@@ -34,9 +35,8 @@ class StatsScreen(Screen):
                 text=text,
                 color=(1,1,1,1),
                 size_hint_y=None,
-                height=kwargs.get('height', 28),
+                height=kwargs.get('height', dp(28)),
                 markup=kwargs.get('markup', False),
-                halign='left'
             )
             lbl.bind(width=lambda instance, value: setattr(instance, 'text_size', (value, None)))
             return lbl
@@ -73,14 +73,12 @@ class StatsScreen(Screen):
                 prev = curr
 
         # General Stats UI
-        box.add_widget(make_label("[b]General Stats[/b]", markup=True, height=36))
+        box.add_widget(make_label("[b]General Stats[/b]", markup=True, height=dp(36)))
         box.add_widget(make_label(f"Total Workouts: {total_workouts}"))
         box.add_widget(make_label(f"Total Exercises Performed: {total_exercises}"))
         box.add_widget(make_label(f"Average Workouts/Week: {avg_per_week}"))
         box.add_widget(make_label(f"Longest Streak: {streak} days"))
-        box.add_widget(Widget(size_hint_y=None, height=10))
-
-        # Muscle Group Distribution
+        box.add_widget(Widget(size_hint_y=None, height=dp(10)))
         muscle_counter = Counter()
         ex_dict = {ex.get("name"): ex for ex in exercises_data}
         for ex_name in all_exercise_names:
@@ -91,27 +89,23 @@ class StatsScreen(Screen):
                 for m in ex.get("secondaryMuscles", []):
                     muscle_counter[m] += 1
         top_muscles = muscle_counter.most_common(5)
-        box.add_widget(make_label("[b]Muscle Group Distribution (Top 5)[/b]", markup=True, height=36))
+        box.add_widget(make_label("[b]Muscle Group Distribution (Top 5)[/b]", markup=True, height=dp(36)))
         for muscle, count in top_muscles:
             box.add_widget(make_label(f"{muscle}: {count}"))
         if len(muscle_counter) > 5:
-            btn = GreenButton(text="Show All Muscle Groups", size_hint_y=None, height=45)
+            btn = GreenButton(text="Show All Muscle Groups", size_hint_y=None, height=dp(45))
             btn.bind(on_release=lambda instance: self.show_muscle_popup(muscle_counter))
             box.add_widget(btn)
-        box.add_widget(Widget(size_hint_y=None, height=10))
-
-        # Exercise Frequency
+        box.add_widget(Widget(size_hint_y=None, height=dp(10)))
         freq_counter = Counter(all_exercise_names)
         top_exercises = freq_counter.most_common(5)
-        box.add_widget(make_label("[b]Exercise Frequency (Top 5)[/b]", markup=True, height=36))
+        box.add_widget(make_label("[b]Exercise Frequency (Top 5)[/b]", markup=True, height=dp(36)))
         for ex_name, count in top_exercises:
             box.add_widget(make_label(f"{display_name(ex_name)}: {count}"))
         if len(freq_counter) > 5:
-            btn = GreenButton(text="Show All Exercises", size_hint_y=None, height=45)
+            btn = GreenButton(text="Show All Exercises", size_hint_y=None, height=dp(45))
             btn.bind(on_release=lambda instance: self.show_exercise_popup(freq_counter))
             box.add_widget(btn)
-
-    def show_muscle_popup(self, muscle_counter):
         layout = BoxLayout(orientation='vertical', padding=16, spacing=12, size_hint_y=None)
         layout.bind(minimum_height=layout.setter('height'))
         sorted_muscles = sorted(muscle_counter.items(), key=lambda x: -x[1])
@@ -120,9 +114,8 @@ class StatsScreen(Screen):
                 text=f"{muscle}: {count}",
                 color=(1,1,1,1),
                 size_hint_y=None,
-                height=32,
+                height=dp(32),
                 halign='left',
-                valign='top'
             )
             lbl.bind(
                 size=lambda instance, value: setattr(instance, 'text_size', (int(instance.width), None))
@@ -142,9 +135,8 @@ class StatsScreen(Screen):
                 text=f"{display_name(ex_name)}: {count}",  # or f"{muscle}: {count}"
                 color=(1,1,1,1),
                 size_hint_y=None,
-                height=32,  # increase for more space
+                height=dp(32),
                 halign='left',
-                valign='top'
             )
             lbl.bind(
                 size=lambda instance, value: setattr(instance, 'text_size', (int(instance.width), None))
