@@ -49,9 +49,9 @@ class MyWorkoutsScreen(Screen):
 
             del_btn = Button(
                 text="Delete",
-                size_hint_x=0.20,
+                size_hint_x=0.10,
                 size_hint_y=None,
-                height=dp(60)
+                height=dp(40)
             )
             del_btn.background_color = (0.9,0.2,0.2,1)
             del_btn.color = (1,1,1,1)

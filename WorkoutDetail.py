@@ -111,7 +111,7 @@ class WorkoutDetailScreen(Screen):
         scroll = ScrollView(size_hint=(1, 1), bar_width=10)
         scroll.add_widget(instr_label)
         layout = BoxLayout(orientation='vertical', padding=[dp(24),dp(24),dp(24),dp(24)], spacing=dp(18))
-        layout.add_widget(Label(text="Instructions", color=(0.2,0.8,0.4,1), font_size=dp(40), bold=True, size_hint_y=None, height=dp(36)))
+        layout.add_widget(Label(text="Instructions", color=(0.2,0.8,0.4,1), font_size=dp(30), bold=True, size_hint_y=None, height=dp(36)))
         layout.add_widget(scroll)
         btn_box = BoxLayout(orientation='horizontal', size_hint_y=None, height=dp(50), padding=[0,dp(10),0,0])
         btn_box.add_widget(Widget())

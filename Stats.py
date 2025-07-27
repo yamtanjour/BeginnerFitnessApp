@@ -21,6 +21,26 @@ from GreenButton import GreenButton
 
 
 class StatsScreen(Screen):
+    def show_muscle_popup(self, muscle_counter):
+        layout = BoxLayout(orientation='vertical', padding=dp(16), spacing=dp(12), size_hint_y=None)
+        layout.bind(minimum_height=layout.setter('height'))
+        sorted_muscles = sorted(muscle_counter.items(), key=lambda x: -x[1])
+        for muscle, count in sorted_muscles:
+            lbl = Label(
+                text=f"{muscle}: {count}",
+                color=(1,1,1,1),
+                size_hint_y=None,
+                height=dp(32),
+                halign='left',
+            )
+            lbl.bind(
+                size=lambda instance, value: setattr(instance, 'text_size', (int(instance.width), None))
+            )
+            layout.add_widget(lbl)
+        scroll = ScrollView(size_hint=(1,1), do_scroll_x=False, do_scroll_y=True, bar_width=8, scroll_type=['bars', 'content'])
+        scroll.add_widget(layout)
+        popup = Popup(title="All Muscle Groups", content=scroll, size_hint=(0.9, 0.8))
+        popup.open()
     def on_pre_enter(self):
         self.populate_stats()
 
@@ -106,25 +126,6 @@ class StatsScreen(Screen):
             btn = GreenButton(text="Show All Exercises", size_hint_y=None, height=dp(45))
             btn.bind(on_release=lambda instance: self.show_exercise_popup(freq_counter))
             box.add_widget(btn)
-        layout = BoxLayout(orientation='vertical', padding=16, spacing=12, size_hint_y=None)
-        layout.bind(minimum_height=layout.setter('height'))
-        sorted_muscles = sorted(muscle_counter.items(), key=lambda x: -x[1])
-        for muscle, count in sorted_muscles:
-            lbl = Label(
-                text=f"{muscle}: {count}",
-                color=(1,1,1,1),
-                size_hint_y=None,
-                height=dp(32),
-                halign='left',
-            )
-            lbl.bind(
-                size=lambda instance, value: setattr(instance, 'text_size', (int(instance.width), None))
-            )
-            layout.add_widget(lbl)
-        scroll = ScrollView(size_hint=(1,1), do_scroll_x=False, do_scroll_y=True, bar_width=8, scroll_type=['bars', 'content'])
-        scroll.add_widget(layout)
-        popup = Popup(title="All Muscle Groups", content=scroll, size_hint=(0.9, 0.8))
-        popup.open()
 
     def show_exercise_popup(self, freq_counter):
         layout = BoxLayout(orientation='vertical', padding=10, spacing=8, size_hint_y=None)
