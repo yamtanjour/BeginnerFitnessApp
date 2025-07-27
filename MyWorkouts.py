@@ -39,7 +39,7 @@ class MyWorkoutsScreen(Screen):
                 color=(1,1,1,1),
                 size_hint_x=0.6,
                 size_hint_y=None,
-                height=dp(40)
+                height=dp(25)
             )
             def on_lbl_touch(instance, touch, name=workout["name"]):
                 if instance.collide_point(*touch.pos):
@@ -51,11 +51,11 @@ class MyWorkoutsScreen(Screen):
                 text="Delete",
                 size_hint_x=0.10,
                 size_hint_y=None,
-                height=dp(40)
+                height=dp(35)
             )
             del_btn.background_color = (0.9,0.2,0.2,1)
             del_btn.color = (1,1,1,1)
-            del_btn.font_size = dp(25)
+            del_btn.font_size = dp(20)
             del_btn.bind(on_release=lambda inst, name=workout["name"]: self.delete_workout(name))
             row.add_widget(del_btn)
 

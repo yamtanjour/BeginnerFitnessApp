@@ -108,6 +108,18 @@
             pos: self.pos
             size: self.size
 
+<TipsScreen>:
+    canvas.before:
+        Rectangle:
+            source: "bg6.jpg"
+            pos: self.pos
+            size: self.size
+        Color:
+            rgba: 0, 0, 0, 0.6 
+        Rectangle:
+            pos: self.pos
+            size: self.size
+
 <HomeScreen>:
     FloatLayout:
         StyledLabel:
@@ -220,7 +232,7 @@
 
         ScrollView:
             size_hint_y: None
-            height: dp(50)
+            height: dp(40)
             BoxLayout:
                 id: exercise_search_results
                 orientation: 'vertical'
@@ -244,7 +256,7 @@
 
         ScrollView:
             size_hint_y: None
-            height: dp(180)
+            height: dp(250)
             BoxLayout:
                 id: exercise_list_box
                 orientation: 'vertical'
@@ -376,21 +388,35 @@
 <TipsScreen>:
     BoxLayout:
         orientation: 'vertical'
-        spacing: dp(18)
-        padding: [dp(16), dp(16), dp(16), dp(16)]
-        BoxLayout:
-            size_hint_y: None
-            height: dp(54)
-            spacing: dp(10)
-            GreenButton:
-                text: "< Back"
-                size_hint_x: 0.3
-                on_release: app.root.current = 'home'
-            StyledLabel:
-                text: "Tips"
-            Widget:
-                size_hint_x: 0.3
-        StyledLabel:
-            text: "Here you can display workout tips or motivational content."
-            halign: 'center'
-            valign: 'middle'
+        spacing: 0
+        padding: 0
+        size: self.size
+        pos: self.pos
+        GreenButton:
+            text: "< Back"
+            size_hint: None, None
+            size: dp(60), dp(44)
+            pos_hint: {"x": 0, "top": 1}
+            on_release: app.root.current = 'home'
+        ScrollView:
+            do_scroll_x: False
+            do_scroll_y: True
+            BoxLayout:
+                orientation: 'vertical'
+                size_hint_y: None
+                height: self.minimum_height
+                spacing: dp(18)
+                padding: [dp(16), dp(16), dp(16), dp(16)]
+                BoxLayout:
+                    size_hint_y: None
+                    height: dp(54)
+                    spacing: dp(10)
+                    Widget:
+                        size_hint_x: 0.3
+                StyledLabel:
+                    text: root.tips_text
+                    halign: 'left'
+                    valign: 'middle'
+                    size_hint_y: None
+                    text_size: self.width, None
+                    height: self.texture_size[1] + dp(24)

@@ -25,6 +25,7 @@ from PremadePopup import PremadePopup
 from GreenButton import GreenButton
 from kivy.core.window import Window
 from PIL import Image as PILImage
+from kivy.properties import StringProperty
 
 def crop_to_aspect(img_path, target_ratio, save_path):
     img = PILImage.open(img_path)
@@ -51,11 +52,19 @@ crop_to_aspect("background2.jpg", target_ratio, "bg2.jpg")
 crop_to_aspect("background3.jpg", target_ratio, "bg3.jpg")
 crop_to_aspect("background4.jpg", target_ratio, "bg4.jpg")
 crop_to_aspect("background5.jpg", target_ratio, "bg5.jpg")
+crop_to_aspect("background6.jpg", target_ratio, "bg6.jpg")
 class HomeScreen(Screen):
     pass
 
 class TipsScreen(Screen):
-    pass
+    tips_text = StringProperty("")
+
+    def on_pre_enter(self):
+        try:
+            with open("tips.txt", "r", encoding="utf-8") as f:
+                self.tips_text = f.read()
+        except Exception as e:
+            self.tips_text = "Could not load tips: " + str(e)
 
 class GreenButton(Button):
     pass
