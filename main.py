@@ -23,6 +23,34 @@ from WorkoutCreation import WorkoutCreationScreen
 from WorkoutDetail import WorkoutDetailScreen
 from PremadePopup import PremadePopup
 from GreenButton import GreenButton
+from kivy.core.window import Window
+from PIL import Image as PILImage
+
+def crop_to_aspect(img_path, target_ratio, save_path):
+    img = PILImage.open(img_path)
+    iw, ih = img.size
+    img_ratio = iw / ih
+
+    if img_ratio > target_ratio:
+        # Image is wider than target: crop width
+        new_width = int(ih * target_ratio)
+        left = (iw - new_width) // 2
+        img = img.crop((left, 0, left + new_width, ih))
+    else:
+        # Image is taller than target: crop height
+        new_height = int(iw / target_ratio)
+        top = (ih - new_height) // 2
+        img = img.crop((0, top, iw, top + new_height))
+    img.save(save_path)
+
+# Usage:
+screen_width, screen_height = Window.size
+target_ratio = screen_width / screen_height
+crop_to_aspect("background1.jpg", target_ratio, "bg1.jpg")
+crop_to_aspect("background2.jpg", target_ratio, "bg2.jpg")
+crop_to_aspect("background3.jpg", target_ratio, "bg3.jpg")
+crop_to_aspect("background4.jpg", target_ratio, "bg4.jpg")
+crop_to_aspect("background5.jpg", target_ratio, "bg5.jpg")
 class HomeScreen(Screen):
     pass
 

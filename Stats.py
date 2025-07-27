@@ -95,7 +95,7 @@ class StatsScreen(Screen):
         for muscle, count in top_muscles:
             box.add_widget(make_label(f"{muscle}: {count}"))
         if len(muscle_counter) > 5:
-            btn = GreenButton(text="Show All Muscle Groups", size_hint_y=None, height=36)
+            btn = GreenButton(text="Show All Muscle Groups", size_hint_y=None, height=45)
             btn.bind(on_release=lambda instance: self.show_muscle_popup(muscle_counter))
             box.add_widget(btn)
         box.add_widget(Widget(size_hint_y=None, height=10))
@@ -107,7 +107,7 @@ class StatsScreen(Screen):
         for ex_name, count in top_exercises:
             box.add_widget(make_label(f"{display_name(ex_name)}: {count}"))
         if len(freq_counter) > 5:
-            btn = GreenButton(text="Show All Exercises", size_hint_y=None, height=36)
+            btn = GreenButton(text="Show All Exercises", size_hint_y=None, height=45)
             btn.bind(on_release=lambda instance: self.show_exercise_popup(freq_counter))
             box.add_widget(btn)
 

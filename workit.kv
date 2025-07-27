@@ -37,7 +37,86 @@
             size: self.size
 
 <HomeScreen>:
+    canvas.before:
+        Rectangle:
+            source: "bg1.jpg"
+            pos: self.pos
+            size: self.size
+        Color:
+            rgba: 0, 0, 0, 0.4
+        Rectangle:
+            pos: self.pos
+            size: self.size
+
+<WorkoutCreationScreen>:
+    canvas.before:
+        Rectangle:
+            source: "bg2.jpg"
+            pos: self.pos
+            size: self.size
+        Color:
+            rgba: 0, 0, 0, 0.4  
+        Rectangle:
+            pos: self.pos
+            size: self.size
+
+<StatsScreen>:
+    canvas.before:
+        Rectangle:
+            source: "bg3.jpg"
+            pos: self.pos
+            size: self.size
+        Color:
+            rgba: 0, 0, 0, 0.4 
+        Rectangle:
+            pos: self.pos
+            size: self.size
+
+<ProgressScreen>:
+    canvas.before:
+        Rectangle:
+            source: "bg4.jpg"
+            pos: self.pos
+            size: self.size
+        Color:
+            rgba: 0, 0, 0, 0.7  
+        Rectangle:
+            pos: self.pos
+            size: self.size
+
+<WorkoutDetailScreen>:
+    canvas.before:
+        Rectangle:
+            source: "bg5.jpg"
+            pos: self.pos
+            size: self.size
+        Color:
+            rgba: 0, 0, 0, 0.7  
+        Rectangle:
+            pos: self.pos
+            size: self.size
+
+<MyWorkoutsScreen>:
+    canvas.before:
+        Rectangle:
+            source: "bg5.jpg"
+            pos: self.pos
+            size: self.size
+        Color:
+            rgba: 0, 0, 0, 0.4 
+        Rectangle:
+            pos: self.pos
+            size: self.size
+
+<HomeScreen>:
     FloatLayout:
+        StyledLabel:
+            text: "WorkIt."
+            font_size: dp(50)
+            bold: True
+            pos_hint: {"center_x": 0.5, "top": 0.8}
+            size_hint: None, None
+            size: self.texture_size
         GreenButton:
             text: "Go to My Workouts"
             size_hint: 0.8, None
@@ -171,7 +250,7 @@
                 orientation: 'vertical'
                 size_hint_y: None
                 height: self.minimum_height
-                spacing: dp(7)
+                spacing: dp(27)
 
         GreenButton:
             text: "Save Workout"

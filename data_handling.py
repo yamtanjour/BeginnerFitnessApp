@@ -13,7 +13,7 @@ from kivy.uix.image import Image
 from kivy.core.window import Window
 
 
-WORKOUTS_FILE = "workouts.json"
+WORKOUTS_FILE = "workouts.json" 
 EXERCISES_FILE = "all_exercises.json"
 PROGRESS_FILE = "progress.json"
 PREMADE_FILE = "premade_workouts.json"
