@@ -52,8 +52,8 @@ class WorkoutCreationScreen(Screen):
                 text=f"[u]{display_name(ex)}[/u]",
                 markup=True,
                 color=(1,1,1,1),
-                font_size=dp(22),
-                size_hint_y=1,
+                font_size=dp(30),
+                size_hint_y=None,
                 height=dp(32),
                 halign='center',
                 valign='middle'
