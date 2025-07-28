@@ -71,7 +71,6 @@ class GreenButton(Button):
 
 class WorkItApp(App):
     def build(self):
-        Window.clearcolor = (0.1, 0.2, 0.5, 1)
         sm = ScreenManager()
         sm.add_widget(HomeScreen(name='home'))
         sm.add_widget(MyWorkoutsScreen(name='my_workouts'))

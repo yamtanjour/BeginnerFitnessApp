@@ -28,14 +28,6 @@
     font_size: dp(22)
     bold: True
 
-<RootWidget@ScreenManager>:
-    canvas.before:
-        Color:
-            rgba: 0.1, 0.2, 0.5, 1
-        Rectangle:
-            pos: self.pos
-            size: self.size
-
 <HomeScreen>:
     canvas.before:
         Rectangle:
@@ -256,7 +248,7 @@
 
         ScrollView:
             size_hint_y: None
-            height: dp(250)
+            height: dp(280)
             BoxLayout:
                 id: exercise_list_box
                 orientation: 'vertical'
