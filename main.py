@@ -21,7 +21,7 @@ from Progress import ProgressScreen
 from Stats import StatsScreen
 from WorkoutCreation import WorkoutCreationScreen
 from WorkoutDetail import WorkoutDetailScreen
-from PremadePopup import PremadePopup
+from PremadeScreen import PremadeScreen
 from GreenButton import GreenButton
 from kivy.core.window import Window
 from PIL import Image as PILImage
@@ -75,6 +75,7 @@ class WorkItApp(App):
         sm.add_widget(HomeScreen(name='home'))
         sm.add_widget(MyWorkoutsScreen(name='my_workouts'))
         sm.add_widget(WorkoutCreationScreen(name='workout_creation'))
+        sm.add_widget(PremadeScreen(name='premade'))
         sm.add_widget(TipsScreen(name='tips'))
         sm.add_widget(WorkoutDetailScreen(name='workout_detail'))
         sm.add_widget(ProgressScreen(name='progress'))

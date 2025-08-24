@@ -16,8 +16,8 @@ from kivy.uix.popup import Popup
 from kivy.uix.image import Image
 from kivy.uix.scrollview import ScrollView
 from data_handling import load_workouts, load_exercises, display_name, save_workouts
-from PremadePopup import PremadePopup
 from kivy.clock import Clock
+from kivy.metrics import dp
 
 class WorkoutCreationScreen(Screen):
     
@@ -29,117 +29,44 @@ class WorkoutCreationScreen(Screen):
     _search_bound = False
 
     def on_pre_enter(self):
-        self.selected_exercises = []
-        self.ids.workout_name.text = ""
-        self.ids.exercise_list_box.clear_widgets()
-        self.ids.exercise_search.text = ""
-        self.ids.exercise_search_results.clear_widgets()
-        if not self.edit_mode:
-            self.editing_workout_name = None
-        # load exercises once and bind search input (debounced)
+        # load exercises once and refresh UI
+        if self._all_exercises is None:
+            self._all_exercises = load_exercises()
+        self.refresh_exercise_list()
+
+    def load_premade_into_selection(self, name, exercises):
+        """Called by PremadeScreen: load premade into creator for editing."""
+        self.edit_mode = True
+        self.editing_workout_name = name
+        self.selected_exercises = list(exercises or [])
+        # set workout name input if present in KV (use id from workit.kv)
         try:
-            if self._all_exercises is None:
-                self._all_exercises = load_exercises()
-        except Exception:
-            self._all_exercises = []
-        # bind the text input once to avoid duplicate bindings
-        try:
-            if not getattr(self, '_search_bound', False):
-                search_widget = self.ids.exercise_search
-                search_widget.bind(text=self.on_search_text)
-                self._search_bound = True
+            if 'workout_name' in self.ids:
+                self.ids.workout_name.text = name
         except Exception:
             pass
-
-    def open_premade_popup(self):
-        popup = PremadePopup()
-        popup.populate_premade_workouts(self)
-        popup.open()
+        self.refresh_exercise_list()
 
     def add_exercise(self, exercise_name):
         if exercise_name and exercise_name not in self.selected_exercises:
             self.selected_exercises.append(exercise_name)
             self.refresh_exercise_list()
 
+    def remove_exercise(self, exercise_name):
+        try:
+            self.selected_exercises.remove(exercise_name)
+        except ValueError:
+            pass
+        self.refresh_exercise_list()
+
     def refresh_exercise_list(self):
-        from kivy.metrics import dp
-        box = self.ids.exercise_list_box
+        """Refresh the visual list of selected exercises (expects id 'exercise_list_box' in KV)."""
+        box = self.ids.get('exercise_list_box')
+        if not box:
+            return
         box.clear_widgets()
         for ex in self.selected_exercises:
-            lbl = Label(
-                text=f"[u]{display_name(ex)}[/u]",
-                markup=True,
-                color=(1,1,1,1),
-                font_size=dp(23),
-                size_hint_y=1,
-                height=dp(25),
-                halign='center',
-                valign='middle'
-            )
-            lbl.bind(size=lambda instance, value: setattr(instance, 'text_size', (instance.width, None)))
-            box.add_widget(lbl)
-
-    def on_search_text(self, instance, value):
-        # debounce input so we don't run heavy search on every keystroke
-        try:
-            if self._search_event:
-                Clock.unschedule(self._search_event)
-        except Exception:
-            pass
-        self._search_event = Clock.schedule_once(lambda dt: self.search_exercises(), 0.25)
-
-    def normalize(self, text):
-        return re.sub(r'[\W_]+', ' ', text.lower())
-
-    def search_exercises(self):
-        from kivy.metrics import dp
-        query = self.normalize(self.ids.exercise_search.text.strip())
-        results_box = self.ids.exercise_search_results
-        results_box.clear_widgets()
-        exercises = self._all_exercises if self._all_exercises is not None else load_exercises()
-        matches = []
-        query_words = query.split()
-        for ex in exercises:
-            ex_name_norm = self.normalize(ex.get("name", ""))
-            if all(word in ex_name_norm for word in query_words):
-                matches.append(ex)
-        for ex in matches[:10]:
-            lbl = Label(
-                text=f"[u]{display_name(ex['name'])}[/u]",
-                markup=True,
-                color=(1,1,1,1),
-                font_size=dp(22),
-                size_hint_y=None,
-                height=dp(32),
-                halign='center',
-                valign='middle'
-            )
-            lbl.bind(size=lambda instance, value: setattr(instance, 'text_size', (instance.width, None)))
-            def on_lbl_touch(instance, touch, name=ex["name"]):
-                if instance.collide_point(*touch.pos):
-                    self.add_exercise(name)
-            lbl.bind(on_touch_down=on_lbl_touch)
-            results_box.add_widget(lbl)
-
-    def save_workout(self):
-        workout_name = self.ids.workout_name.text.strip()
-        if not workout_name or not self.selected_exercises:
-            return
-        workouts = load_workouts()
-        if getattr(self, 'edit_mode', False) and getattr(self, 'editing_workout_name', None):
-            for w in workouts:
-                if w['name'] == self.editing_workout_name:
-                    w['name'] = workout_name
-                    w['exercises'] = self.selected_exercises
-                    break
-            self.edit_mode = False
-            self.editing_workout_name = None
-        else:
-            workouts.append({"name": workout_name, "exercises": self.selected_exercises})
-        save_workouts(workouts)
-        self.manager.current = 'my_workouts'
-
-    def load_premade_into_selection(self, workout_name, exercises):
-        self.ids.workout_name.text = display_name(workout_name)
-        self.selected_exercises = list(exercises)
-        self.refresh_exercise_list()
+            btn = Button(text=display_name(ex), size_hint_y=None, height=dp(40))
+            # tap to remove (simple behavior); change to drag/reorder as needed
+            btn.bind(on_release=lambda inst, e=ex: self.remove_exercise(e))
+            box.add_widget(btn)

@@ -63,6 +63,9 @@
                 text: 'My Workouts'
                 on_release: app.root.current = 'my_workouts'
             Button:
+                text: 'Premade'
+                on_release: app.root.current = 'premade'
+            Button:
                 text: 'Progress'
                 on_release: app.root.current = 'progress'
             Button:
@@ -71,6 +74,16 @@
 
 # My Workouts screen
 <MyWorkoutsScreen>:
+    canvas.before:
+        Rectangle:
+            source: 'bg2.jpg'
+            pos: self.pos
+            size: self.size
+        Color:
+            rgba: 0,0,0,0.35
+        Rectangle:
+            pos: self.pos
+            size: self.size
     on_pre_enter: root.on_pre_enter()
     BoxLayout:
         orientation: 'vertical'
@@ -87,6 +100,11 @@
             StyledLabel:
                 text: 'My Workouts'
             Button:
+                text: 'Premade'
+                size_hint_x: None
+                width: dp(100)
+                on_release: app.root.current = 'premade'
+            Button:
                 text: 'New'
                 size_hint_x: None
                 width: dp(100)
@@ -102,6 +120,16 @@
 
 # Workout creation
 <WorkoutCreationScreen>:
+    canvas.before:
+        Rectangle:
+            source: 'bg3.jpg'
+            pos: self.pos
+            size: self.size
+        Color:
+            rgba: 0,0,0,0.35
+        Rectangle:
+            pos: self.pos
+            size: self.size
     on_pre_enter: root.on_pre_enter()
     BoxLayout:
         orientation: 'vertical'
@@ -185,8 +213,58 @@
                 text: 'Close'
                 on_release: root.dismiss()
 
+# Full screen premade browser
+<PremadeScreen>:
+    canvas.before:
+        Rectangle:
+            source: 'bg3.jpg'
+            pos: self.pos
+            size: self.size
+        Color:
+            rgba: 0,0,0,0.35
+        Rectangle:
+            pos: self.pos
+            size: self.size
+    BoxLayout:
+        orientation: 'vertical'
+        padding: dp(12)
+        spacing: dp(8)
+        BoxLayout:
+            size_hint_y: None
+            height: dp(56)
+            Button:
+                text: '< Back'
+                size_hint_x: None
+                width: dp(100)
+                on_release: app.root.current = 'home'
+            StyledLabel:
+                text: 'Premade Workouts'
+            Button:
+                text: 'Refresh'
+                size_hint_x: None
+                width: dp(100)
+                on_release: root.on_pre_enter()
+        ScrollView:
+            GridLayout:
+                id: premade_list
+                cols: 1
+                size_hint_y: None
+                height: self.minimum_height
+                row_default_height: dp(100)
+                spacing: dp(8)
+
 # Workout detail
 <WorkoutDetailScreen>:
+    canvas.before:
+        Rectangle:
+            source: 'bg4.jpg'
+            pos: self.pos
+            size: self.size
+        Color:
+            rgba: 0,0,0,0.35
+        Rectangle:
+            pos: self.pos
+            size: self.size
     on_pre_enter: root.on_pre_enter()
     BoxLayout:
         orientation: 'vertical'
@@ -224,6 +302,16 @@
 
 # Progress
 <ProgressScreen>:
+    canvas.before:
+        Rectangle:
+            source: 'bg5.jpg'
+            pos: self.pos
+            size: self.size
+        Color:
+            rgba: 0,0,0,0.35
+        Rectangle:
+            pos: self.pos
+            size: self.size
     on_pre_enter: root.on_pre_enter()
     BoxLayout:
         orientation: 'vertical'
@@ -256,6 +344,16 @@
 
 # Stats
 <StatsScreen>:
+    canvas.before:
+        Rectangle:
+            source: 'bg6.jpg'
+            pos: self.pos
+            size: self.size
+        Color:
+            rgba: 0,0,0,0.35
+        Rectangle:
+            pos: self.pos
+            size: self.size
     on_pre_enter: root.on_pre_enter()
     BoxLayout:
         orientation: 'vertical'
@@ -281,6 +379,16 @@
 
 # Tips
 <TipsScreen>:
+    canvas.before:
+        Rectangle:
+            source: 'bg1.jpg'
+            pos: self.pos
+            size: self.size
+        Color:
+            rgba: 0,0,0,0.35
+        Rectangle:
+            pos: self.pos
+            size: self.size
     BoxLayout:
         orientation: 'vertical'
         padding: dp(8)
