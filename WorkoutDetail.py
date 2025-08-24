@@ -13,7 +13,7 @@ from kivy.uix.boxlayout import BoxLayout
 from kivy.uix.label import Label
 from kivy.uix.widget import Widget
 from kivy.uix.popup import Popup
-from kivy.uix.image import Image
+from kivy.uix.image import Image, AsyncImage
 from kivy.uix.scrollview import ScrollView
 from kivy.metrics import dp
 from data_handling import load_workouts, load_exercises, save_progress, load_progress, EXERCISE_IMAGES_DIR, get_exercise_info, display_name, load_premade_workouts, ensure_json_file_exists   
@@ -31,7 +31,9 @@ class WorkoutDetailScreen(Screen):
                 break
         box = self.ids.workout_detail_box
         box.clear_widgets()
-        for ex in self.workout["exercises"]:
+        if not getattr(self, 'workout', None):
+            return
+        for ex in self.workout.get("exercises", []):
             row = BoxLayout(orientation='horizontal', size_hint_y=None, height=dp(50), spacing=dp(10), padding=[dp(5),0,dp(5),0])
             lbl = Label(
                 text=display_name(ex),
@@ -75,7 +77,8 @@ class WorkoutDetailScreen(Screen):
         for img_name in images:
             img_path = os.path.join(EXERCISE_IMAGES_DIR, img_name)
             if os.path.exists(img_path):
-                img_vbox.add_widget(Image(source=img_path, size_hint=(None, None), size=(dp(320), dp(220))))
+                # AsyncImage avoids blocking the UI while decoding/loading images
+                img_vbox.add_widget(AsyncImage(source=img_path, size_hint=(None, None), size=(dp(320), dp(220)), allow_stretch=True))
             else:
                 img_vbox.add_widget(Label(text="No image", size_hint=(None, None), size=(dp(320), dp(220)), color=(1,1,1,1)))
         img_vbox.height = len(images) * dp(235)

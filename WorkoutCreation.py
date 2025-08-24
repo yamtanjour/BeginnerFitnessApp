@@ -15,14 +15,18 @@ from kivy.uix.widget import Widget
 from kivy.uix.popup import Popup
 from kivy.uix.image import Image
 from kivy.uix.scrollview import ScrollView
-from data_handling import load_workouts, load_exercises, display_name,display_name, save_workouts
+from data_handling import load_workouts, load_exercises, display_name, save_workouts
 from PremadePopup import PremadePopup
+from kivy.clock import Clock
 
 class WorkoutCreationScreen(Screen):
     
     selected_exercises = []
     edit_mode = False
     editing_workout_name = None
+    _all_exercises = None
+    _search_event = None
+    _search_bound = False
 
     def on_pre_enter(self):
         self.selected_exercises = []
@@ -32,6 +36,20 @@ class WorkoutCreationScreen(Screen):
         self.ids.exercise_search_results.clear_widgets()
         if not self.edit_mode:
             self.editing_workout_name = None
+        # load exercises once and bind search input (debounced)
+        try:
+            if self._all_exercises is None:
+                self._all_exercises = load_exercises()
+        except Exception:
+            self._all_exercises = []
+        # bind the text input once to avoid duplicate bindings
+        try:
+            if not getattr(self, '_search_bound', False):
+                search_widget = self.ids.exercise_search
+                search_widget.bind(text=self.on_search_text)
+                self._search_bound = True
+        except Exception:
+            pass
 
     def open_premade_popup(self):
         popup = PremadePopup()
@@ -61,6 +79,15 @@ class WorkoutCreationScreen(Screen):
             lbl.bind(size=lambda instance, value: setattr(instance, 'text_size', (instance.width, None)))
             box.add_widget(lbl)
 
+    def on_search_text(self, instance, value):
+        # debounce input so we don't run heavy search on every keystroke
+        try:
+            if self._search_event:
+                Clock.unschedule(self._search_event)
+        except Exception:
+            pass
+        self._search_event = Clock.schedule_once(lambda dt: self.search_exercises(), 0.25)
+
     def normalize(self, text):
         return re.sub(r'[\W_]+', ' ', text.lower())
 
@@ -69,7 +96,7 @@ class WorkoutCreationScreen(Screen):
         query = self.normalize(self.ids.exercise_search.text.strip())
         results_box = self.ids.exercise_search_results
         results_box.clear_widgets()
-        exercises = load_exercises()
+        exercises = self._all_exercises if self._all_exercises is not None else load_exercises()
         matches = []
         query_words = query.split()
         for ex in exercises:
