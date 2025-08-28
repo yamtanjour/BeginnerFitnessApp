@@ -4,9 +4,16 @@
 # import dp helper
 #:import dp kivy.metrics.dp
 
+<RobotoButton@Button>:
+    font_name: 'Roboto'
+
+<RobotoLabel@Label>:
+    font_name: 'Roboto'
+
 <GreenButton@Button>:
     background_color: 0, 0, 0, 0
     color: 1, 1, 1, 1
+    font_name: 'Roboto'
     font_size: dp(16)
     bold: True
     size_hint_y: None
@@ -22,12 +29,14 @@
 
 <StyledLabel@Label>:
     color: 1, 1, 1, 1
+    font_name: 'Roboto'
     font_size: dp(20)
     bold: True
 
 <ClickableLabel@Label>:
     color: 1,1,1,1
     markup: True
+    font_name: 'Roboto'
     font_size: dp(15)
 
 # Home
@@ -59,16 +68,16 @@
             size_hint_y: None
             height: dp(180)
             spacing: dp(10)
-            Button:
+            RobotoButton:
                 text: 'My Workouts'
                 on_release: app.root.current = 'my_workouts'
-            Button:
+            RobotoButton:
                 text: 'Premade'
                 on_release: app.root.current = 'premade'
-            Button:
+            RobotoButton:
                 text: 'Progress'
                 on_release: app.root.current = 'progress'
-            Button:
+            RobotoButton:
                 text: 'Tips'
                 on_release: app.root.current = 'tips'
 
@@ -92,19 +101,19 @@
         BoxLayout:
             size_hint_y: None
             height: dp(56)
-            Button:
+            RobotoButton:
                 text: '< Back'
                 size_hint_x: None
                 width: dp(100)
                 on_release: app.root.current = 'home'
             StyledLabel:
                 text: 'My Workouts'
-            Button:
+            RobotoButton:
                 text: 'Premade'
                 size_hint_x: None
                 width: dp(100)
                 on_release: app.root.current = 'premade'
-            Button:
+            RobotoButton:
                 text: 'New'
                 size_hint_x: None
                 width: dp(100)
@@ -138,7 +147,7 @@
         BoxLayout:
             size_hint_y: None
             height: dp(52)
-            Button:
+            RobotoButton:
                 text: '< Back'
                 size_hint_x: None
                 width: dp(100)
@@ -157,6 +166,8 @@
             size_hint_y: None
             height: dp(44)
             multiline: False
+            on_text: root.update_search_results(self.text)
+            on_text_validate: root.add_exercise_from_input(self.text); self.text = ''
         ScrollView:
             size_hint_y: 0.35
             GridLayout:
@@ -183,10 +194,10 @@
             size_hint_y: None
             height: dp(48)
             spacing: dp(8)
-            Button:
+            RobotoButton:
                 text: 'Save'
                 on_release: root.save_workout()
-            Button:
+            RobotoButton:
                 text: 'Cancel'
                 on_release: app.root.current = 'my_workouts'
 
@@ -232,14 +243,14 @@
         BoxLayout:
             size_hint_y: None
             height: dp(56)
-            Button:
+            RobotoButton:
                 text: '< Back'
                 size_hint_x: None
                 width: dp(100)
                 on_release: app.root.current = 'home'
             StyledLabel:
                 text: 'Premade Workouts'
-            Button:
+            RobotoButton:
                 text: 'Refresh'
                 size_hint_x: None
                 width: dp(100)
@@ -293,10 +304,10 @@
             size_hint_y: None
             height: dp(48)
             spacing: dp(8)
-            Button:
+            RobotoButton:
                 text: 'Finish'
                 on_release: root.finish_workout()
-            Button:
+            RobotoButton:
                 text: 'Home'
                 on_release: app.root.current = 'home'
 
@@ -320,7 +331,7 @@
         BoxLayout:
             size_hint_y: None
             height: dp(56)
-            Button:
+            RobotoButton:
                 text: '< Back'
                 size_hint_x: None
                 width: dp(100)
@@ -362,7 +373,7 @@
         BoxLayout:
             size_hint_y: None
             height: dp(56)
-            Button:
+            RobotoButton:
                 text: '< Back'
                 size_hint_x: None
                 width: dp(100)

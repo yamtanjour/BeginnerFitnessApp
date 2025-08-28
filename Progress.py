@@ -13,7 +13,6 @@ from kivy.uix.boxlayout import BoxLayout
 from kivy.uix.label import Label
 from kivy.uix.widget import Widget
 from kivy.uix.popup import Popup
-from kivy.uix.image import Image
 from kivy.uix.scrollview import ScrollView
 from data_handling import load_progress, display_name
 

@@ -13,7 +13,6 @@ from kivy.uix.boxlayout import BoxLayout
 from kivy.uix.label import Label
 from kivy.uix.widget import Widget
 from kivy.uix.popup import Popup
-from kivy.uix.image import Image
 from kivy.uix.scrollview import ScrollView
 from data_handling import display_name, load_exercises, save_workouts, load_workouts, load_premade_workouts
 from MyWorkouts import MyWorkoutsScreen
@@ -70,6 +69,7 @@ class GreenButton(Button):
     pass
 
 class WorkItApp(App):
+    title = 'WorkIt'
     def build(self):
         sm = ScreenManager()
         sm.add_widget(HomeScreen(name='home'))

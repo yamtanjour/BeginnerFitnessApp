@@ -9,7 +9,6 @@ from kivy.uix.popup import Popup
 from kivy.uix.button import Button
 from kivy.uix.scrollview import ScrollView
 from kivy.uix.checkbox import CheckBox
-from kivy.uix.image import Image
 from kivy.core.window import Window
 
 

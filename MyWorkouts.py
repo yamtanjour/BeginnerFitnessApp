@@ -13,7 +13,6 @@ from kivy.uix.boxlayout import BoxLayout
 from kivy.uix.label import Label
 from kivy.uix.widget import Widget
 from kivy.uix.popup import Popup
-from kivy.uix.image import Image
 from kivy.uix.scrollview import ScrollView
 from kivy.metrics import dp
 from data_handling import load_workouts, display_name, save_workouts
