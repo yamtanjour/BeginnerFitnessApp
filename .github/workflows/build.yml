@@ -20,12 +20,15 @@ jobs:
         with:
           python-version: "3.10"
 
-      - name: Install Buildozer Action
+      - name: Build with Buildozer
         uses: ArtemSBulgakov/buildozer-action@v1
         with:
           command: buildozer android debug
-          workdir: .
-          buildozer-version: stable
+          workdir: /github/workspace
+          repository_root: /github/workspace
+          buildozer_version: '1.2.0'
+        env:
+          USER: runner
 
       - name: Upload APK
         uses: actions/upload-artifact@v4
