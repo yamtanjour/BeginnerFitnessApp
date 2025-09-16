@@ -26,6 +26,7 @@ from kivy.core.window import Window
 from PIL import Image as PILImage
 from kivy.properties import StringProperty
 
+#Start
 def crop_to_aspect(img_path, target_ratio, save_path):
     img = PILImage.open(img_path)
     iw, ih = img.size
@@ -52,6 +53,7 @@ crop_to_aspect("background3.jpg", target_ratio, "bg3.jpg")
 crop_to_aspect("background4.jpg", target_ratio, "bg4.jpg")
 crop_to_aspect("background5.jpg", target_ratio, "bg5.jpg")
 crop_to_aspect("background6.jpg", target_ratio, "bg6.jpg")
+
 class HomeScreen(Screen):
     tips_list = [
         "Always warm up for 5–10 minutes before lifting weights. (e.g., brisk walking, cycling, or dynamic stretches)",
