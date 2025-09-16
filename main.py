@@ -53,17 +53,45 @@ crop_to_aspect("background4.jpg", target_ratio, "bg4.jpg")
 crop_to_aspect("background5.jpg", target_ratio, "bg5.jpg")
 crop_to_aspect("background6.jpg", target_ratio, "bg6.jpg")
 class HomeScreen(Screen):
-    pass
+    tips_list = [
+        "Always warm up for 5–10 minutes before lifting weights. (e.g., brisk walking, cycling, or dynamic stretches)",
+        "Focus on proper form before increasing the weight. Use mirrors or ask staff to help you correct your posture.",
+        "Stick to full-body workouts during your first few weeks. They build a foundation and help your body adjust.",
+        "Use machines when starting — they guide movement and reduce injury risk.",
+        "Start with 2–3 workouts per week, then gradually increase to 4–5.",
+        "Take at least one rest day between strength sessions to recover.",
+        "Drink water during your workout — bring a refillable bottle.",
+        "Wear clean gym shoes and bring a towel every session.",
+        "Log each workout, even if it's short — tracking builds consistency.",
+        "Don't skip stretching after a workout — it helps with recovery.",
+        "Rest 30–60 seconds between sets; longer (90s–2 mins) for heavier lifts.",
+        "Combine cardio and strength training for better overall results.",
+        "Avoid training the same muscle group two days in a row.",
+        "Clean equipment after use — wipe down benches and machines.",
+        "Re-rack your weights when you're done — keep the gym safe and tidy.",
+        "Focus on controlled movement — no need to rush reps.",
+        "Don’t skip leg day — leg exercises build total-body strength.",
+        "Set short-term goals (e.g., 3 workouts this week) to stay motivated.",
+        "Track how you feel after each workout — tired, sore, strong, etc.",
+        "Get 7–9 hours of sleep per night — recovery happens when you rest."
+    ]
 
-class TipsScreen(Screen):
-    tips_text = StringProperty("")
+    @property
+    def daily_tip(self):
+        today = datetime.date.today().toordinal()
+        return self.tips_list[today % len(self.tips_list)]
 
-    def on_pre_enter(self):
-        try:
-            with open("tips.txt", "r", encoding="utf-8") as f:
-                self.tips_text = f.read()
-        except Exception as e:
-            self.tips_text = "Could not load tips: " + str(e)
+
+
+#class TipsScreen(Screen):
+ #   tips_text = StringProperty("")
+#
+ #   def on_pre_enter(self):
+  #      try:
+   #         with open("tips.txt", "r", encoding="utf-8") as f:
+    #            self.tips_text = f.read()
+     #   except Exception as e:
+      #      self.tips_text = "Could not load tips: " + str(e)
 
 class GreenButton(Button):
     pass
@@ -76,7 +104,7 @@ class WorkItApp(App):
         sm.add_widget(MyWorkoutsScreen(name='my_workouts'))
         sm.add_widget(WorkoutCreationScreen(name='workout_creation'))
         sm.add_widget(PremadeScreen(name='premade'))
-        sm.add_widget(TipsScreen(name='tips'))
+#        sm.add_widget(TipsScreen(name='tips'))
         sm.add_widget(WorkoutDetailScreen(name='workout_detail'))
         sm.add_widget(ProgressScreen(name='progress'))
         sm.add_widget(StatsScreen(name='stats'))
