@@ -1,30 +1,17 @@
-import json
 import os
-import re
 import datetime
-import shutil
-from collections import Counter, defaultdict
 from kivy.app import App
 from kivy.core.window import Window
 from kivy.uix.screenmanager import ScreenManager, Screen
-from kivy.uix.button import Button
-from kivy.uix.checkbox import CheckBox
-from kivy.uix.boxlayout import BoxLayout
-from kivy.uix.label import Label
-from kivy.uix.widget import Widget
-from kivy.uix.popup import Popup
-from kivy.uix.scrollview import ScrollView
-from data_handling import display_name, load_exercises, save_workouts, load_workouts, load_premade_workouts
-from MyWorkouts import MyWorkoutsScreen
-from Progress import ProgressScreen
-from Stats import StatsScreen
-from WorkoutCreation import WorkoutCreationScreen
-from WorkoutDetail import WorkoutDetailScreen
-from PremadeScreen import PremadeScreen
-from GreenButton import GreenButton
-from kivy.core.window import Window
 from PIL import Image as PILImage
-from kivy.properties import StringProperty
+from data.data_handling import display_name, load_exercises, save_workouts, load_workouts, load_premade_workouts
+from screens.MyWorkouts import MyWorkoutsScreen
+from screens.Progress import ProgressScreen
+from screens.Stats import StatsScreen
+from screens.WorkoutCreation import WorkoutCreationScreen
+from screens.WorkoutDetail import WorkoutDetailScreen
+from screens.PremadeScreen import PremadeScreen
+from components.GreenButton import GreenButton
 
 #Start
 def crop_to_aspect(img_path, target_ratio, save_path):
@@ -47,12 +34,12 @@ def crop_to_aspect(img_path, target_ratio, save_path):
 # Usage:
 screen_width, screen_height = Window.size
 target_ratio = screen_width / screen_height
-crop_to_aspect("background1.jpg", target_ratio, "bg1.jpg")
-crop_to_aspect("background2.jpg", target_ratio, "bg2.jpg")
-crop_to_aspect("background3.jpg", target_ratio, "bg3.jpg")
-crop_to_aspect("background4.jpg", target_ratio, "bg4.jpg")
-crop_to_aspect("background5.jpg", target_ratio, "bg5.jpg")
-crop_to_aspect("background6.jpg", target_ratio, "bg6.jpg")
+crop_to_aspect("assets/backgrounds/background1.jpg", target_ratio, "assets/backgrounds/bg1.jpg")
+crop_to_aspect("assets/backgrounds/background2.jpg", target_ratio, "assets/backgrounds/bg2.jpg")
+crop_to_aspect("assets/backgrounds/background3.jpg", target_ratio, "assets/backgrounds/bg3.jpg")
+crop_to_aspect("assets/backgrounds/background4.jpg", target_ratio, "assets/backgrounds/bg4.jpg")
+crop_to_aspect("assets/backgrounds/background5.jpg", target_ratio, "assets/backgrounds/bg5.jpg")
+crop_to_aspect("assets/backgrounds/background6.jpg", target_ratio, "assets/backgrounds/bg6.jpg")
 
 class HomeScreen(Screen):
     tips_list = [
@@ -84,20 +71,6 @@ class HomeScreen(Screen):
         return self.tips_list[today % len(self.tips_list)]
 
 
-
-#class TipsScreen(Screen):
- #   tips_text = StringProperty("")
-#
- #   def on_pre_enter(self):
-  #      try:
-   #         with open("tips.txt", "r", encoding="utf-8") as f:
-    #            self.tips_text = f.read()
-     #   except Exception as e:
-      #      self.tips_text = "Could not load tips: " + str(e)
-
-class GreenButton(Button):
-    pass
-
 class WorkItApp(App):
     title = 'WorkIt'
     def build(self):
@@ -106,7 +79,6 @@ class WorkItApp(App):
         sm.add_widget(MyWorkoutsScreen(name='my_workouts'))
         sm.add_widget(WorkoutCreationScreen(name='workout_creation'))
         sm.add_widget(PremadeScreen(name='premade'))
-#        sm.add_widget(TipsScreen(name='tips'))
         sm.add_widget(WorkoutDetailScreen(name='workout_detail'))
         sm.add_widget(ProgressScreen(name='progress'))
         sm.add_widget(StatsScreen(name='stats'))

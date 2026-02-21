@@ -55,7 +55,8 @@ desktop.ini
 *.bak
 *.orig
 
-# ── Testing / coverage ───────────────────────────────────────
+# ── Generated at runtime ────────────────────────────────────
+assets/backgrounds/bg*.jpg
 .pytest_cache/
 .coverage
 htmlcov/

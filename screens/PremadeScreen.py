@@ -5,7 +5,7 @@ from kivy.uix.label import Label
 from kivy.uix.scrollview import ScrollView
 from kivy.uix.gridlayout import GridLayout
 from kivy.metrics import dp
-from data_handling import load_premade_workouts, load_workouts, save_workouts, display_name
+from data.data_handling import load_premade_workouts, load_workouts, save_workouts, display_name
 
 
 class PremadeScreen(Screen):

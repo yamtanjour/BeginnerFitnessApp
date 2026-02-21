@@ -14,7 +14,7 @@ from kivy.uix.label import Label
 from kivy.uix.widget import Widget
 from kivy.uix.popup import Popup
 from kivy.uix.scrollview import ScrollView
-from data_handling import load_workouts, load_exercises, display_name, save_workouts
+from data.data_handling import load_workouts, load_exercises, display_name, save_workouts
 from kivy.clock import Clock
 from kivy.metrics import dp
 

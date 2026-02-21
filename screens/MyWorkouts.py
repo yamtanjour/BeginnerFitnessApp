@@ -15,7 +15,7 @@ from kivy.uix.widget import Widget
 from kivy.uix.popup import Popup
 from kivy.uix.scrollview import ScrollView
 from kivy.metrics import dp
-from data_handling import load_workouts, display_name, save_workouts
+from data.data_handling import load_workouts, display_name, save_workouts
 
 class MyWorkoutsScreen(Screen):
     selected_workout = None

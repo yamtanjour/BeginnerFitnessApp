@@ -15,8 +15,8 @@ from kivy.uix.label import Label
 from kivy.uix.widget import Widget
 from kivy.uix.popup import Popup
 from kivy.uix.scrollview import ScrollView
-from data_handling import load_progress, display_name, load_exercises
-from GreenButton import GreenButton
+from data.data_handling import load_progress, display_name, load_exercises
+from components.GreenButton import GreenButton
 
 
 class StatsScreen(Screen):

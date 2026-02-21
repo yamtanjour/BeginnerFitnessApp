@@ -14,7 +14,7 @@ from kivy.uix.label import Label
 from kivy.uix.widget import Widget
 from kivy.uix.popup import Popup
 from kivy.uix.scrollview import ScrollView
-from data_handling import load_progress, display_name
+from data.data_handling import load_progress, display_name
 
 class ProgressScreen(Screen):
     def on_pre_enter(self):

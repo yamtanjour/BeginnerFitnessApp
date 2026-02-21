@@ -16,7 +16,7 @@ from kivy.uix.popup import Popup
 from kivy.uix.image import AsyncImage
 from kivy.uix.scrollview import ScrollView
 from kivy.metrics import dp
-from data_handling import load_workouts, load_exercises, save_progress, load_progress, EXERCISE_IMAGES_DIR, get_exercise_info, display_name, load_premade_workouts, ensure_json_file_exists   
+from data.data_handling import load_workouts, load_exercises, save_progress, load_progress, EXERCISE_IMAGES_DIR, get_exercise_info, display_name, load_premade_workouts, ensure_json_file_exists
 
 
 class WorkoutDetailScreen(Screen):
