@@ -1,10 +1,62 @@
-# Ignore folders
-#exercise_images/
-#images/
-#exercises/
-#all_exercises.json
-
-
-# Ignore specific file
-#all_exercises.json
+# ── Python ──────────────────────────────────────────────────
 __pycache__/
+*.py[cod]
+*$py.class
+*.pyo
+*.pyd
+*.egg
+*.egg-info/
+dist/
+build/
+eggs/
+parts/
+var/
+sdist/
+develop-eggs/
+.installed.cfg
+lib/
+lib64/
+
+# ── Virtual environments ─────────────────────────────────────
+.venv/
+venv/
+ENV/
+env/
+.env
+
+# ── Kivy ────────────────────────────────────────────────────
+*.pyc
+.kivy/
+
+# ── Buildozer / Android ──────────────────────────────────────
+.buildozer/
+bin/
+*.apk
+*.aab
+*.keystore
+
+# ── IDE / editor ─────────────────────────────────────────────
+.vscode/
+.idea/
+*.suo
+*.user
+*.swp
+*.swo
+*~
+
+# ── OS ───────────────────────────────────────────────────────
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# ── Logs & temp files ────────────────────────────────────────
+*.log
+*.tmp
+*.bak
+*.orig
+
+# ── Testing / coverage ───────────────────────────────────────
+.pytest_cache/
+.coverage
+htmlcov/
+.tox/
